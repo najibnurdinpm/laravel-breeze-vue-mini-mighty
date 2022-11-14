@@ -1,17 +1,27 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
+<script setup>
+import Checkbox from '@/Components/Checkbox.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+
+defineProps({
+    canResetPassword: Boolean,
+    status: String,
+});
+
+const form = useForm({
+    otp: '',
+});
+
+const submit = () => {
+    form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+    });
+};
+</script>
 <template>
   <!--
     This example requires updating your template:
@@ -37,7 +47,7 @@
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Verify otp</label>
             <div class="mt-1">
-              <input id="password" name="password" type="number" autocomplete="current-password" required="" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
+              <TextInput id="otp" type="number" v-model="form.otp" required autofocus autocomplete="phone" />
             </div>
           </div>
 

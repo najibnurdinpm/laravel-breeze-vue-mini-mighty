@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    -webkit-font-smoothing: antialiased;
+}
 
 body {
     background-color: #f3f4f6;
 }
+
+
