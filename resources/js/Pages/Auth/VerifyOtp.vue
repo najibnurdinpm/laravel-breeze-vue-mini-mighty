@@ -21,6 +21,24 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const InputOTP = (event) => {
+  var theEvent = event || window.event;
+
+	// Handle paste
+	if (theEvent.type === "paste") {
+		key = event.clipboardData.getData("text/plain");
+	} else {
+		// Handle key press
+		var key = theEvent.keyCode || theEvent.which;
+		key = String.fromCharCode(key);
+	}
+	var regex = /[0-9]|\./;
+	if (!regex.test(key)) {
+		theEvent.returnValue = false;
+		if (theEvent.preventDefault) theEvent.preventDefault();
+	}
+}
 </script>
 <template>
   <!--
@@ -35,20 +53,17 @@ const submit = () => {
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
       <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Please Insert Verify OTP</h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
-      Verify Otp has been send to message in your Phone Number
-      </p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form class="space-y-6" action="#" method="POST">
-
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Verify otp</label>
+            <InputLabel for="otp" value="Verification code has been sent via SMS to 0897XXXX9293" />
             <div class="mt-1">
-              <TextInput id="otp" type="number" v-model="form.otp" required autofocus autocomplete="phone" />
-            </div>
+               <input @keypress="InputOTP" id="otp" name="otp" type="text" autocomplete="otp" size="6" maxlength="6" required="" class="block w-full appearance-none rounded-md border-2 border-x-white border-y-white border-b-gray-300  px-3 py-2 placeholder-gray-300 shadow-sm focus:border-x-white focus:border-y-white focus:border-b-gray-300 sm:text-2xl tracking-[20px] text-center text-gray-500 focus:ring-0" /> 
+              </div>
+              <p class="mt-2 text-sm text-gray-500">Didn't receive the code? Click <a class="text-indigo-600 hover:text-indigo-500 text-sm" href=""> Here </a>to resend</p>
           </div>
 
           <div>
