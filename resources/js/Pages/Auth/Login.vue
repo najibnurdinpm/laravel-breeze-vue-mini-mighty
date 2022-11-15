@@ -19,7 +19,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => form.reset('remember', 'phone'),
     });
 };
 </script>
@@ -35,7 +35,7 @@ const submit = () => {
         <form @submit.prevent="submit" class="space-y-6" >
 
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Please insert to your phone number</label>
+            <InputLabel for="phone" value="Please insert to your phone number" />
             <div class="mt-1">
               <TextInput id="phone" type="number" v-model="form.phone" required autofocus autocomplete="phone" />
             </div>
@@ -43,12 +43,17 @@ const submit = () => {
 
           <div class="flex items-center justify-between">
             <div class="flex items-center">
-              <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+              
+              <Checkbox id="remember-me" name="remember-me" v-model:checked="form.remember" />
               <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
             </div>
-
-            <div class="text-sm">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your phone number</a>
+            <div class="text-xs">
+              <p class="font-medium text-gray-900">
+                Don’t have an account ? Register
+                <Link v-if="canResetPassword" :href="route('register')" class="text-indigo-600 hover:text-indigo-500 text-sm">
+                    Here
+                </Link>
+              </p>
             </div>
           </div>
 

@@ -385,6 +385,8 @@
                               <div class="ml-4 mt-2">
                                 <p class="text-xs font-small leading-6 text-gray-900">Total sales over time </p>
                               </div>
+                              
+            <canvas id="myChart" width="200" height="100"></canvas>
                             </div>
                           </div>
                         </div>
@@ -404,7 +406,8 @@
 </template>
 <script setup>
   import {
-    ref
+    ref,
+    onMounted
   } from 'vue'
   import {
     Dialog,
@@ -431,6 +434,51 @@
     MagnifyingGlassIcon,
     EllipsisVerticalIcon
   } from '@heroicons/vue/20/solid'
+
+  import Chart from 'chart.js/auto';
+
+   onMounted(() => {
+       const ctx = document.getElementById('myChart');
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Nov 1', 'Nov 2', 'Nov 3'],
+            datasets: [{
+                label: '$',
+                data: ["27", "19", "50"],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+               yAxes: [{
+                  ticks: {
+                    callback: function(value, index, values) {
+                      return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+                    }
+                  }
+                }]
+            }
+        }
+    });
+   })
+
   const navigation = [{
     name: 'Dashboard',
     href: '#',
