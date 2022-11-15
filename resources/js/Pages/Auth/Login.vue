@@ -47,10 +47,9 @@ const submit = () => {
               <Checkbox id="remember-me" name="remember-me" v-model:checked="form.remember" />
               <label for="remember-me" class="ml-2 block text-xs text-gray-900">Remember me</label>
             </div>
-            <div class="text-xs">
-              <p class="text-gray-900">
-                Don’t have an account ? Register
-                <Link v-if="canResetPassword" :href="route('register')" class="text-indigo-600 hover:text-indigo-500 text-sm">
+            <div class="">
+              <p class="block text-xs text-gray-900">Don’t have an account ? Register
+                <Link v-if="canResetPassword" :href="route('register')" class="text-indigo-600 hover:text-indigo-500">
                     Here
                 </Link>
               </p>

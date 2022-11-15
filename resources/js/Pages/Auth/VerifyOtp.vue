@@ -61,7 +61,7 @@ const InputOTP = (event) => {
           <div>
             <InputLabel for="otp" value="Verification code has been sent via SMS to 0897XXXX9293" />
             <div class="mt-1">
-               <input @keypress="InputOTP" id="otp" name="otp" type="text" autocomplete="otp" size="6" maxlength="6" required="" class="block w-full appearance-none rounded-md border-2 border-x-white border-y-white border-b-gray-300  px-3 py-2 placeholder-gray-300 shadow-sm focus:border-x-white focus:border-y-white focus:border-b-gray-300 sm:text-2xl tracking-[20px] text-center text-gray-500 focus:ring-0" /> 
+               <input @keypress="InputOTP" id="otp" name="otp" type="text" autocomplete="otp" size="6" maxlength="6" required="" class="block w-full appearance-none border-2 border-x-white border-y-white border-b-gray-300  px-3 py-2 placeholder-gray-300 focus:border-x-white focus:border-y-white focus:border-b-gray-300 sm:text-2xl tracking-[20px] text-center text-gray-500 focus:ring-0" /> 
               </div>
               <p class="mt-2 text-sm text-gray-500">Didn't receive the code? Click <a class="text-indigo-600 hover:text-indigo-500 text-sm" href=""> Here </a>to resend</p>
           </div>
