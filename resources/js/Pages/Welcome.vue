@@ -26,6 +26,22 @@
     members: 12,
     bgColor: 'bg-purple-600'
   }, 
+  
+  ]
+
+   const HeaderCard = [{
+    name: 'Graph API',
+    initials: 'GA',
+    href: '#',
+    members: 16,
+    bgColor: 'bg-pink-600'
+  }, {
+    name: 'Component Design',
+    initials: 'CD',
+    href: '#',
+    members: 12,
+    bgColor: 'bg-purple-600'
+  }, 
   {
     name: 'Graph API',
     initials: 'GA',
@@ -38,23 +54,10 @@
     href: '#',
     members: 12,
     bgColor: 'bg-purple-600'
-  }
+  }, 
+  
   ]
   const people = [{
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      role: 'Admin',
-      email: 'janecooper@example.com',
-      telephone: '+1-202-555-0170',
-      imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    }, {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      role: 'Admin',
-      email: 'janecooper@example.com',
-      telephone: '+1-202-555-0170',
-      imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },{
       name: 'Jane Cooper',
       title: 'Regional Paradigm Technician',
       role: 'Admin',
@@ -77,7 +80,7 @@
     <HeaderDasboard>
       <h1 class="text-2xl font-semibold text-gray-900 mb-4">Dashboard</h1>
       <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-      <li v-for="project in projects" :key="project.name" class="col-span-1 flex rounded-md shadow-sm">
+      <li v-for="project in HeaderCard" :key="project.name" class="col-span-1 flex rounded-md shadow-sm">
         <div :class="[project.bgColor, 'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md']">{{ project.initials }}</div>
         <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
           <div class="flex-1 truncate px-4 py-2 text-sm">
