@@ -1,7 +1,6 @@
 <script setup>
   import GuestLayout from '@/Layouts/GuestLayout.vue';
   import HeaderAuth from '@/Layouts/HeaderAuth.vue';
-  import ApplicationLogo from '@/Components/ApplicationLogo.vue';
   import CardAuth from '@/Layouts/CardAuth.vue';
   import InputError from '@/Components/InputError.vue';
   import InputLabel from '@/Components/InputLabel.vue';
@@ -27,7 +26,6 @@
 <template>
   <GuestLayout>
     <HeaderAuth>
-      <ApplicationLogo />
       <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Register</h2>
     </HeaderAuth>
     <CardAuth>

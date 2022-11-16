@@ -1,6 +1,5 @@
 <script setup>
   import Checkbox from '@/Components/Checkbox.vue';
-  import ApplicationLogo from '@/Components/ApplicationLogo.vue';
   import GuestLayout from '@/Layouts/GuestLayout.vue';
   import HeaderAuth from '@/Layouts/HeaderAuth.vue';
   import CardAuth from '@/Layouts/CardAuth.vue';
@@ -45,7 +44,6 @@
 <template>
   <GuestLayout>
     <HeaderAuth>
-      <ApplicationLogo />
       <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Please Insert Verify OTP</h2>
     </HeaderAuth>
     <CardAuth>
