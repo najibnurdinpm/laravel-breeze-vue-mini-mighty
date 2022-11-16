@@ -386,7 +386,7 @@
                                 <p class="text-xs font-small leading-6 text-gray-900">Total sales over time </p>
                               </div>
                               
-            <canvas id="myChart" width="200" height="100"></canvas>
+                              <canvas id="myChart" width="200" height="100"></canvas>
                             </div>
                           </div>
                         </div>
