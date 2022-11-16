@@ -25,8 +25,36 @@
     href: '#',
     members: 12,
     bgColor: 'bg-purple-600'
-  }, ]
+  }, 
+  {
+    name: 'Graph API',
+    initials: 'GA',
+    href: '#',
+    members: 16,
+    bgColor: 'bg-pink-600'
+  }, {
+    name: 'Component Design',
+    initials: 'CD',
+    href: '#',
+    members: 12,
+    bgColor: 'bg-purple-600'
+  }
+  ]
   const people = [{
+      name: 'Jane Cooper',
+      title: 'Regional Paradigm Technician',
+      role: 'Admin',
+      email: 'janecooper@example.com',
+      telephone: '+1-202-555-0170',
+      imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+    }, {
+      name: 'Jane Cooper',
+      title: 'Regional Paradigm Technician',
+      role: 'Admin',
+      email: 'janecooper@example.com',
+      telephone: '+1-202-555-0170',
+      imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+    },{
       name: 'Jane Cooper',
       title: 'Regional Paradigm Technician',
       role: 'Admin',
@@ -47,7 +75,24 @@
 <template lang="">
   <DashboardLayout>
     <HeaderDasboard>
-      <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+      <h1 class="text-2xl font-semibold text-gray-900 mb-4">Dashboard</h1>
+      <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+      <li v-for="project in projects" :key="project.name" class="col-span-1 flex rounded-md shadow-sm">
+        <div :class="[project.bgColor, 'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md']">{{ project.initials }}</div>
+        <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
+          <div class="flex-1 truncate px-4 py-2 text-sm">
+            <a :href="project.href" class="font-medium text-gray-900 hover:text-gray-600">{{ project.name }}</a>
+            <p class="text-gray-500">{{ project.members }} Members</p>
+          </div>
+          <div class="flex-shrink-0 pr-2">
+            <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <span class="sr-only">Open options</span>
+              <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
     </HeaderDasboard>
     <BodyDashboard>
       <div class="relative z-0 flex flex-1 overflow-hidden">
