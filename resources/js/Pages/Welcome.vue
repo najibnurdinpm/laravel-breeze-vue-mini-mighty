@@ -22,7 +22,7 @@
   ChartBarIcon,
   CurrencyDollarIcon,
   UserGroupIcon,
-  ArrowsPointingInIcon
+  TagIcon
 } from '@heroicons/vue/24/outline'
 
   const data = {
@@ -125,7 +125,7 @@
     initials: 'O',
     href: '#',
     icon:ChartBarIcon,
-    members: 59000,
+    members: 5900,
     title: 'Orders',
     bgColor: 'bg-purple-600'
   }, 
@@ -138,10 +138,10 @@
     title: 'Visitor',
     bgColor: 'bg-yellow-500'
   }, {
-    name: 'product seen',
+    name: 'Product Seen',
     initials: 'P',
     href: '#',
-    icon:ArrowsPointingInIcon,
+    icon:TagIcon,
     members: 96847498,
     title: 'Visitor',
     bgColor: 'bg-green-500'
@@ -176,7 +176,7 @@
         <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
           <div class="flex-1 truncate px-4 py-2 text-sm">
             <a :href="project.href" class="font-medium text-gray-900 hover:text-gray-600">{{ project.name }}</a>
-            <p class="text-gray-500">{{ project.members }}</p>
+            <p class="text-gray-500">{{ project.members.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}</p>
           </div>
           <div class="flex-shrink-0 pr-2">
             <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
