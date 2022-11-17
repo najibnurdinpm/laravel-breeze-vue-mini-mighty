@@ -1,4 +1,5 @@
 <script setup>
+  import { inject } from 'vue'
   import GuestLayout from '@/Layouts/GuestLayout.vue';
   import HeaderAuth from '@/Layouts/HeaderAuth.vue';
   import CardAuth from '@/Layouts/CardAuth.vue';
@@ -17,11 +18,25 @@
     telp: '',
   });
   const submit = () => {
-      console.log('form', form)
-    // form.post(route('register'), {
-    //   onFinish: () => form.reset('password', 'password_confirmation'),
-    // });
+    form.post(route('register'), {
+      onFinish: () => {
+        form.reset('name', 'email', 'telp'),
+        alertSwal({
+          icon:'success',
+          title:'Register successfully'
+        })
+      }
+    });
   };
+  const swal = inject('$swal')
+  const alertSwal = (res) => {
+    swal.fire({
+        icon: res.icon,
+        title: res.title,
+        showConfirmButton: true,
+        timer: 1500
+    });
+  }
 </script>
 <template>
   <GuestLayout>

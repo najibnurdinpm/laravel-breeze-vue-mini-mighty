@@ -1,4 +1,5 @@
 <script setup>
+  import { inject } from 'vue';
   import Checkbox from '@/Components/Checkbox.vue';
   import GuestLayout from '@/Layouts/GuestLayout.vue';
   import HeaderAuth from '@/Layouts/HeaderAuth.vue';
@@ -21,9 +22,27 @@
   });
   const submit = () => {
     form.post(route('login'), {
-      onFinish: () => form.reset('otp'),
+      onFinish: () =>{
+        form.reset('otp'),
+        alertSwal({
+          icon:'success',
+          title:'Otp successfully'
+        })
+      } 
+      
     });
   };
+
+const swal = inject('$swal')
+const alertSwal = (res) => {
+  swal.fire({
+      icon: res.icon,
+      title: res.title,
+      showConfirmButton: true,
+      timer: 1500
+  });
+}
+
   const InputOTP = (event) => {
     var theEvent = event || window.event;
     // Handle paste

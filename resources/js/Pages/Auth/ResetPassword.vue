@@ -1,4 +1,5 @@
 <script setup>
+import { inject } from 'vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -20,9 +21,22 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('password.update'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => {    
+            console.log('form', form)
+            // form.reset('password', 'password_confirmation'),
+            alertSwal()
+        }
     });
 };
+const swal = inject('$swal')
+  const alertSwal = () => {
+    swal.fire({
+        icon: 'success',
+        title: 'Register successfully',
+        showConfirmButton: true,
+        timer: 1500
+    });
+  }
 </script>
 
 <template>

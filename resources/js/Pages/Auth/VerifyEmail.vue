@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
@@ -11,8 +11,24 @@ const props = defineProps({
 const form = useForm();
 
 const submit = () => {
-    form.post(route('verification.send'));
+    form.post(route('verification.send'), {
+        onFinish: () => {    
+            console.log('form', form)
+            // form.reset('password', 'password_confirmation'),
+            alertSwal()
+        }
+    });
 };
+
+const swal = inject('$swal')
+  const alertSwal = () => {
+    swal.fire({
+        icon: 'success',
+        title: 'Register successfully',
+        showConfirmButton: true,
+        timer: 1500
+    });
+  }
 
 const verificationLinkSent = computed(() => props.status === 'verification-link-sent');
 </script>

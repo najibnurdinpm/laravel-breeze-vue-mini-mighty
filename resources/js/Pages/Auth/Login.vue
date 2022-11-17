@@ -1,4 +1,5 @@
 <script setup>
+  import { inject } from 'vue'
   import Checkbox from '@/Components/Checkbox.vue';
   import ApplicationLogo from '@/Components/ApplicationLogo.vue';
   import GuestLayout from '@/Layouts/GuestLayout.vue';
@@ -8,6 +9,9 @@
   import InputLabel from '@/Components/InputLabel.vue';
   import PrimaryButton from '@/Components/PrimaryButton.vue';
   import TextInput from '@/Components/TextInput.vue';
+  import { XCircleIcon } from '@heroicons/vue/20/solid'
+  import VueSweetalert2 from 'vue-sweetalert2';
+
   import {
     Head,
     Link,
@@ -23,12 +27,35 @@
   });
   const submit = () => {
     form.post(route('login'), {
-      onFinish: () => form.reset('remember', 'phone'),
+      onFinish: () => {
+        form.reset('remember', 'phone'),
+        alertSwal({
+          icon:'success',
+          title:'Login successfully'
+        })
+      }
     });
   };
+  const swal = inject('$swal')
+  const alertSwal = (res) => {
+    swal.fire({
+        icon: res.icon,
+        title: res.title,
+        showConfirmButton: true,
+        timer: 1500
+    });
+
+
+  }
+
+
 </script>
 <template>
   <GuestLayout>
+    
+    
+    
+
     <HeaderAuth>
       <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
     </HeaderAuth>
