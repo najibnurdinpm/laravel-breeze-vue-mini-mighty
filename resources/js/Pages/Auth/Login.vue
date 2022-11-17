@@ -74,7 +74,7 @@
           </div>
           <div class="">
             <p class="block text-xs text-gray-900">Don’t have an account ? Register
-              <Link v-if="canResetPassword" :href="route('register')" class="text-indigo-600 hover:text-indigo-500"> Here </Link>
+              <Link :href="route('register')" class="text-indigo-600 hover:text-indigo-500"> Here </Link>
             </p>
           </div>
         </div>
