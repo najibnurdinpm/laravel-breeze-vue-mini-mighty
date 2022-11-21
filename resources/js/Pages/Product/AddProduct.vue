@@ -1,7 +1,8 @@
 <script setup>
   import {
     ref,
-    onMounted
+    onMounted,
+    inject
   } from 'vue'
   import DashboardLayout from '@/Layouts/Dashboard/DashboardLayout.vue';
   import HeaderDasboard from '@/Layouts/Dashboard/HeaderDasboard.vue';
@@ -16,6 +17,8 @@
   import CardBodyLayout from '@/Layouts/Dashboard/CardDashboard/CardBodyLayout.vue';
   import TextInput from '@/Components/TextInput.vue';
   import Checkbox from '@/Components/Checkbox.vue';
+  import VueSweetalert2 from 'vue-sweetalert2';
+  
   import {
     Head,
     Link,
@@ -44,7 +47,11 @@
     product_variant: [],
   });
   const submit = () => {
-    console.log(form)
+    swal.fire(
+      'Success!',
+      'Data has been insert.',
+      'success'
+    )
   };
   const people = [{
       name: 'Adidas | Adidas Golf',
@@ -138,6 +145,11 @@
     bgColor: 'bg-purple-600'
   }, ]
   const inputChecked = ref(false);
+
+  const swal = inject('$swal')
+
+
+
   const Pust_Variant = (idx) => {
     const objVariant = {
       index: idx,
@@ -196,7 +208,8 @@
       }
     })
   }
-  const remove_product__review = (index) => {
+
+  const run_remove__product__review = (index) => {
     form.product_photo.splice(index, 1);
     form.product_photo.map((items, index) => {
       const IndexLawas = items.index
@@ -204,8 +217,30 @@
         items.index = index
       }
     })
-    console.log('form.product_photo', form.product_photo)
   }
+
+  const remove_product__review = (index) => {
+    swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        run_remove__product__review(index)
+      }
+    })
+  }
+
   const edit_product__review = (index) => {
     if (index == form.product_photo[index].index) {
       form.product_photo[index].image = event.target.files[0]
@@ -223,33 +258,39 @@
         <MainDashboard>
           <CardDashboardLayout>
             <form @submit.prevent="submit" class="space-y-8 divide-y divide-gray-200">
+            
               <CardBodyLayout>
+              
                 <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                   <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+                    <div>
+                      <h3 class="text-lg font-medium leading-6 text-gray-900">Add product</h3>
+                      <p class="mt-1 max-w-2xl text-sm text-gray-500">Add product </p>
+                    </div>
                     <div class="space-y-6 sm:space-y-5">
                       <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
-                        <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Vendor</label>
+                        <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Collection</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
-                          <select id="country" name="country" autocomplete="country-name" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-lg sm:text-sm">
+                          <select id="country" name="country" autocomplete="country-name" class="block w-full  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             <option>Nike</option>
                             <option>Adidas</option>
                             <option>Vans</option>
                           </select>
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
                       </div>
                       <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="first-name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Title</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                           <TextInput id="title" type="text" v-model="form.title" required autofocus autocomplete="first-name" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
                       </div>
                       <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="about" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Description</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
-                          <textarea id="about" name="about" rows="3" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <textarea id="about" name="about" rows="3" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
                       </div>
                       <div class="sm:grid grid-cols-3  sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
@@ -314,30 +355,30 @@
                         <label for="first-name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">SKU (Stock Keeping Unit)</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                           <TextInput id="sku" type="text" v-model="form.sku" required autofocus autocomplete="sku" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
                       </div>
-                      <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                      <!-- <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="first-name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Barcode (ISBN, UPC, GTIN, etc.)</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                           <TextInput id="isbn" type="text" v-model="form.isbn" required autofocus autocomplete="isbn" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
-                      </div>
-                      <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                      </div> -->
+                    <!--  <div class=" sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="first-name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">country</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                           <TextInput id="country" type="text" v-model="form.country" required autofocus autocomplete="country" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
                       </div>
                       <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="first-name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Postal Code</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                           <TextInput id="postal_code" type="text" v-model="form.postal_code" required autofocus autocomplete="postal_code" />
-                          <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+                          <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <div class="relative flex items-start">
                           <div class="flex h-5 items-center">
@@ -349,19 +390,21 @@
                         </div>
                         <div :class="[ form.variant ? 'block' : 'hidden', 'sm:col-span-2']">
                           <div class="sm:grid sm:grid-cols-1 sm:items-start sm:gap-4">
+                          
                             <div class="max-w-lg ">
+                            
                               <!-- looping varian size ,color and etc -->
                               <div v-for="(item, index) in form.product_variant" class="flex w-full items-start justify-between p-4 border border-gray-300 rounded-md mb-4">
-                                <div class="flex-1 truncate">
+                                <div class="flex-1">
                                   <div class="">
                                     <div class="mt-1 flex-1 sm:mt-0 mb-4">
-                                      <input @keyup="Input_Variant(index)" type="text" :id="'item_variant__'+index" :autocomplete="'item_variant__'+index" placeholder="Color, Size, Etc" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-full sm:text-sm" />
-                                      <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
+                                      <input @keyup="Input_Variant(index)" type="text" :id="'item_variant__'+index" :autocomplete="'item_variant__'+index" placeholder="Color, Size, Etc" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
+                                      <p class="mt-2 text-sm text-gray-500 hidden hidden">Write a few sentences about yourself.</p>
                                     </div>
                                   </div>
                                   <div class="mt-1 flex-1 sm:mt-0 ">
-                                    <input @keyup="Input_Value(index)" type="text" :id="'item_value__'+index" :autocomplete="'item_value__'+index" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-full sm:text-sm" placeholder="Green, M, etc" />
-                                    <p class="mt-2 text-sm text-gray-500 hidden">Write a few sentences about yourself.</p>
+                                    <input @keyup="Input_Value(index)" type="text" :id="'item_value__'+index" :autocomplete="'item_value__'+index" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Green, M, etc" />
+                                    <p class="mt-2 text-sm text-gray-500 hidden hidden">Write a few sentences about yourself.</p>
                                   </div>
                                 </div>
                                 <div class="h-full flex items-start ml-4">
