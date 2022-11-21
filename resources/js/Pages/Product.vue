@@ -102,7 +102,7 @@
         <div class="-my-2 overflow-x-auto sm:-mx-4 lg:-mx-4  bg-white">
           <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <div class="sm:pl-3">
+              <div class="sm:pl-4">
                 <div class="sm:hidden">
                   <label for="tabs" class="sr-only">Select a tab</label>
                   <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
