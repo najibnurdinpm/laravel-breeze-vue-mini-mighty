@@ -18,11 +18,13 @@
   import TextInput from '@/Components/TextInput.vue';
   import Checkbox from '@/Components/Checkbox.vue';
   import VueSweetalert2 from 'vue-sweetalert2';
+
   
   import {
     Head,
     Link,
-    useForm
+    useForm,
+    usePage
   } from '@inertiajs/inertia-vue3';
   import {
     TrashIcon,
@@ -30,7 +32,7 @@
     PencilSquareIcon,
   } from '@heroicons/vue/24/outline'
   const form = useForm({
-    vendor: '',
+    vendor: 'nike',
     title: '',
     description: '',
     product_photo: [{
@@ -47,11 +49,16 @@
     product_variant: [],
   });
   const submit = () => {
-    swal.fire(
-      'Success!',
-      'Data has been insert.',
-      'success'
-    )
+
+    form.post(route('product'), {
+      onFinish: () => {
+        swal.fire(
+          'Success!',
+          'Data has been insert.',
+          'success'
+        )
+      }
+    });
   };
   const people = [{
       name: 'Adidas | Adidas Golf',

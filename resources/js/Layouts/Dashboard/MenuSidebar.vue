@@ -65,7 +65,7 @@ const props = defineProps({
             <component :is="FolderIcon" :class="[$page.url == '/collection' ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
             Collection
         </Link>
-        <Link :href="route('/')" :class="[$page.url == '/' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+        <Link :href="route('discount')" :class="[$page.url == '/discount' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
             <component :is="ReceiptPercentIcon" :class="[$page.url == '/product' ? 'text-gray-300' : 'text-gray-400 group-hover:text-gray-300', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
             Discounts
         </Link>

@@ -1,7 +1,8 @@
 <script setup>
   import {
     ref,
-    onMounted
+    onMounted,
+    inject
   } from 'vue'
   import DashboardLayout from '@/Layouts/Dashboard/DashboardLayout.vue';
   import HeaderDasboard from '@/Layouts/Dashboard/HeaderDasboard.vue';
@@ -41,6 +42,82 @@
   import {
     Link,
   } from '@inertiajs/inertia-vue3';
+  const swal = inject('$swal')
+  const Items_Checked = ref([])
+
+  onMounted(() => {
+    const ck__delete = document.querySelectorAll(".ck-delete")
+    
+    ck__delete.forEach((items) => {
+      const obj = {
+        checked:false
+      }
+      Items_Checked.value.push(obj)
+    });
+  })
+
+  const ckbox = ref(false);
+  const CountCkDelete = ref(0)
+
+  const SetCkBox = () => {
+      let countCk = 0
+      if(event.target.checked) {
+        document.querySelectorAll(".ck-delete").forEach((items) => {
+          countCk++
+        });
+        CountCkDelete.value = countCk
+        Items_Checked.value.map((items)=>{
+          if(!items.checked) {
+            items.checked = true
+          }
+        })
+      } else {
+        countCk = 0
+        Items_Checked.value.map((items)=>{
+          if(items.checked) {
+            items.checked = false
+          }
+        })
+      }
+      ckbox.value = event.target.checked 
+      CountCkDelete.value=countCk
+  }
+
+  const NewListDelete = (index) => {
+    let count__true = 0
+    Items_Checked.value[index].checked = event.target.checked;
+    Items_Checked.value.map((items)=>{
+      items.checked ? count__true++ : '' 
+    })
+    CountCkDelete.value=count__true
+    if(count__true == Items_Checked.value.length) {
+      ckbox.value = true
+    } else {
+      ckbox.value = false
+    }
+  }
+
+  const Remove_Product = () => {
+    swal.fire({
+      title: 'Are you sure?',
+      text: "Delete this data",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+
   const people = [{
       name: 'Adidas | Adidas Golf',
       status: 'active',
@@ -86,19 +163,7 @@
     name: 'All',
     href: '#',
     current: true
-  }, {
-    name: 'Active',
-    href: '#',
-    current: false
-  }, {
-    name: 'Draft',
-    href: '#',
-    current: false
-  }, {
-    name: 'Archived',
-    href: '#',
-    current: false
-  }, ])
+  }])
   const SetLink = (idx) => {
     event.preventDefault()
     tabs?.value?.map((items, index) => {
@@ -118,7 +183,7 @@
           </p>
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Link :href="route('add-product')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"> Add {{$page.url.replaceAll("/","")}} </Link>
+          <Link :href="route('add-collection')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"> Add {{$page.url.replaceAll("/","")}} </Link>
         </div>
       </HeaderTable>
     </HeaderDasboard>
@@ -167,31 +232,6 @@
           </div>
           <Menu as="div" class="relative inline-block text-left">
             <div>
-              <MenuButton class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"> Product vendor
-                <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
-              </MenuButton>
-            </div>
-            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-              <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div class="block ">
-                  <MenuItem v-slot="{ active }">
-                  <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700' , 'flex items-center px-4 py-2']">
-                    <input id="adidas" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                    <label for="adidas" class="block px-4 py-2 text-sm flex-1"> Adidas </label>
-                  </div>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                  <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700' , 'flex items-center px-4 py-2']">
-                    <input id="nike" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                    <label for="nike" class="block px-4 py-2 text-sm flex-1"> Nike </label>
-                  </div>
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </transition>
-          </Menu>
-          <Menu as="div" class="relative inline-block text-left">
-            <div>
               <MenuButton class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"> Sort
                 <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
               </MenuButton>
@@ -216,47 +256,52 @@
             </transition>
           </Menu>
         </div>
+
+        <div :class="[CountCkDelete ? '' : 'hidden' ,' flex flex-1 justify-start px-2 py-2']">
+          <div class="inline-flex w-auto justify-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+            <div class="flex h-5 items-center">
+              <input @change="SetCkBox" id="delete" aria-describedby="delete-description" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" :checked="ckbox" />
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="delete" class="font-medium text-gray-700">{{CountCkDelete}} selected</label>
+            </div>
+          </div>
+          <button @click="Remove_Product" type="button" class="inline-flex items-center rounded border border-transparent bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
+        </div>
+
         <Tables>
-          <thead class="bg-gray-50 border-t border-gray-200">
+          <thead :class="[CountCkDelete ? 'hidden' : '' , ' bg-gray-50 border-t border-gray-200']">
             <tr>
               <th scope="col" class="whitespace-wrap py-4 pl-4 text-sm font-medium text-gray-900 sm:pl-4">
                 <div class="relative flex justify-start items-start">
                   <div class="flex h-5 items-center">
-                    <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                    <input @change="SetCkBox" id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" :checked="ckbox"/>
                   </div>
                 </div>
               </th>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Product</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Inventory</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Vendor</th>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Title</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Products</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Product Description</th>
               <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                 <span class="sr-only">Edit</span>
               </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
-            <tr v-for="person in people" :key="person.email">
+            <tr v-for="(person, index) in people" :key="person.email">
               <td class="pl-4">
                 <div class="relative flex justify-start items-center">
                   <div class="flex h-5 items-center ">
-                    <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                    <input @change="NewListDelete(index)" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ck-delete" :checked="Items_Checked[index]?.checked" />
                   </div>
                   <div class="hidden sm:block ml-6 flex h-full items-center jusfity-center border  border-gray-300 rounded">
-                    <img class="h-10 w-10 object-contain" src="https://cdn.shopify.com/s/files/1/0624/5135/1770/products/44694ee386818f3276566210464cf341_350x350.jpg?v=1653011890" alt="">
+                    <img class="h-10 w-10 object-contain" src="https://cdn.shopify.com/s/files/1/0624/5135/1770/collections/97a3b1227876bf099d279fd38290e567.jpg?v=1653012126" alt="">
                   </div>
                 </div>
               </td>
               <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 w-64">{{ person.name }} </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                  {{person.status}}
-                </span>
-              </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.inventory }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.type }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.vendor }}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">5</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Testing description</td>
               <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                 <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
               </td>
@@ -269,7 +314,7 @@
 
       
 
-         <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6 rounded-md sm:mt-4">
+         <div class="flex items-center justify-between px-4 py-3 sm:px-6 rounded-md sm:mt-2">
     <div class="flex flex-1 justify-between sm:hidden">
       <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
       <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
@@ -293,7 +338,7 @@
         </p>
       </div>
       <div>
-        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+        <nav class="isolate inline-flex -space-x-px rounded-md" aria-label="Pagination">
           <a href="#" class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
             <span class="sr-only">Previous</span>
             <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,16 +30,31 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/product', function () {
-    return Inertia::render('Product');
-})->name('product');
+// Route::get('/product', function () {
+//     return Inertia::render('Product');
+// })->name('product');
+Route::get('/product', [ProductController::class, 'create'])
+                ->name('product');
 
 Route::get('/add-product', function () {
     return Inertia::render('Product/AddProduct');
 })->name('add-product');
 
-Route::get('/collection', function () {
-    return Inertia::render('Collection/Collection');
-})->name('collection');
+Route::post('/product', [ProductController::class, 'store'])
+                ->name('product');
+
+Route::get('/collection', [CollectionController::class, 'create'])
+    ->name('collection');
+
+Route::post('/collection', [CollectionController::class, 'store'])
+    ->name('collection');
+
+    Route::get('/add-collection', function () {
+        return Inertia::render('Collection/AddCollection');
+    })->name('add-collection');
+
+    Route::get('/discount', function () {
+        return Inertia::render('Discount/Discount');
+    })->name('discount');
 
 require __DIR__.'/auth.php';
