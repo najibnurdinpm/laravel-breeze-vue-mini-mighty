@@ -32,4 +32,8 @@ Route::get('/product', function () {
     return Inertia::render('Product');
 })->name('product');
 
+Route::get('/add-product', function () {
+    return Inertia::render('Product/AddProduct');
+})->name('add-product');
+
 require __DIR__.'/auth.php';
