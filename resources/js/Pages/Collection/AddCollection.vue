@@ -27,9 +27,7 @@
     usePage
   } from '@inertiajs/inertia-vue3';
   import {
-    TrashIcon,
-    PlusIcon,
-    PencilSquareIcon,
+    ArrowLeftIcon,
   } from '@heroicons/vue/24/outline'
   const swal = inject('$swal')
   const form = useForm({
@@ -64,8 +62,10 @@
                 <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                   <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
                     <div>
-                      <h3 class="text-lg font-medium leading-6 text-gray-900">Add Collection</h3>
-                      <p class="mt-1 max-w-2xl text-sm text-gray-500">Add collection </p>
+                      <div class="flex">
+                          <Link :href="route('collection')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"> <component :is="ArrowLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" /> </Link>
+                          <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Create colletion</h3>
+                      </div>
                     </div>
                     <div class="space-y-6 sm:space-y-5">
                     

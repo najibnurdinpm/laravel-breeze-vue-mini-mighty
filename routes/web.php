@@ -64,6 +64,8 @@ Route::get('/edit-collection/{id}', [CollectionController::class, 'edit'])
     })->name('add-collection');
 
     
+
+    
     // Route::get('/discount', function () {
     //     return Inertia::render('Discount/Discount');
     // })->name('discount');
@@ -73,5 +75,14 @@ Route::get('/edit-collection/{id}', [CollectionController::class, 'edit'])
 
     Route::get('/add-discount', [DiscountController::class, 'create'])
         ->name('add-discount');
+
+        Route::post('/discount', [DiscountController::class, 'store'])
+        ->name('discount');
+
+        Route::get('/edit-discount/{id}', [DiscountController::class, 'edit'])
+    ->name('edit-discount');
+
+    Route::post('/update-discount/{id}', [DiscountController::class, 'update'])
+    ->name('update-discount');
 
 require __DIR__.'/auth.php';

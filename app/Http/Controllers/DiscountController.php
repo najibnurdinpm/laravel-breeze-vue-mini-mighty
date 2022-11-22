@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class DiscountController extends Controller
@@ -35,7 +36,7 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        
+        return Redirect::to('discount');
     }
 
     /**
@@ -57,6 +58,7 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
+        return Inertia::render('Discount/EditDiscount');
         //
     }
 
@@ -69,7 +71,7 @@ class DiscountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Redirect::to('discount');
     }
 
     /**

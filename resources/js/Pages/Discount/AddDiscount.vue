@@ -18,6 +18,9 @@
   import TextInput from '@/Components/TextInput.vue';
   import Checkbox from '@/Components/Checkbox.vue';
   import VueSweetalert2 from 'vue-sweetalert2';
+  import Datepicker from 'vuejs3-datepicker';
+import moment from 'moment';
+
 
   
   import {
@@ -27,17 +30,26 @@
     usePage
   } from '@inertiajs/inertia-vue3';
   import {
-    TrashIcon,
-    PlusIcon,
-    PencilSquareIcon,
+    ArrowLeftIcon,
   } from '@heroicons/vue/24/outline'
   const swal = inject('$swal')
   const form = useForm({
-    title: '',
-    description: '',
+    discount_code: '',
+    value_discount: '',
+    minimum_p__a:false,
+    value_m__pa: 0,
+    start_date:new Date(moment()),
+    end_date:new Date(moment()),
   });
+
+  const state = {
+    date: new Date(moment())
+  }
+  console.log(new Date(moment()))
+
+
   const submit = () => {
-      form.post(route('collection'), {
+      form.post(route('discount'), {
       onFinish: () => {
         swal.fire(
           'Success!',
@@ -87,8 +99,10 @@ const Hide__Or__Show__MPA = () => {
                 <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                   <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
                     <div>
-                      <h3 class="text-lg font-medium leading-6 text-gray-900">Add Collection</h3>
-                      <p class="mt-1 max-w-2xl text-sm text-gray-500">Add collection </p>
+                      <div class="flex">
+                          <Link :href="route('discount')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"> <component :is="ArrowLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" /> </Link>
+                          <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Create dicount</h3>
+                      </div>
                     </div>
                     <div class="space-y-6 sm:space-y-5">
                     
@@ -98,7 +112,7 @@ const Hide__Or__Show__MPA = () => {
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                           <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Discount code</label>
                           <div class="mt-1 sm:col-span-2 sm:mt-0">
-                            <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                          <TextInput id="title" type="text" placeholde="Discount mode" v-model="form.discount_code" autofocus required />
                           </div>
                         </div>
 
@@ -134,9 +148,11 @@ const Hide__Or__Show__MPA = () => {
                                   <nav class="flex" aria-label="Tabs">
                                     <a v-for="(tab, index) in tabs" :key="tab.name" @click="ChangeActiveTabs(index)" :href="tab.href" :class="[tab.current ? 'bg-indigo-100 text-indigo-700' : 'text-gray-500 hover:text-gray-700  border-gray-300', 'border px-3 py-2 font-medium text-sm']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
                                   </nav>
+                                  
                                   <div class="mt-1 flex-1 sm:col-span-2 sm:mt-0">
-                                    <input type="text" name="discount" id="region" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder=""  />
+                                    <TextInput name="discount" type="number" placeholder="%" v-model="form.value_discount" required />
                                   </div>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -180,7 +196,7 @@ const Hide__Or__Show__MPA = () => {
 
                             <div :class="[Minimum__Purchase__amount ? 'sm:grid' : 'sm:hidden ' , 'sm:grid sm:grid-cols-6 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5']">
                               <div class="sm:col-start-3 mt-1 sm:col-span-4 sm:mt-0">
-                                <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="IDR. 0.00" />
+                                <TextInput placeholder="IDR. 0.00" type="number" v-model="form.value_m__pa" />
                               </div>
                           </div>
 
@@ -190,12 +206,12 @@ const Hide__Or__Show__MPA = () => {
                           <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Active Dates</label>
                           <div class="mt-1 sm:col-span-1 sm:mt-0">
                             <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pb-2 ">Start Dates</label>
-                              <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                              <datepicker  v-model="form.start_date"></datepicker>
                             </div>
 
                           <div class="mt-1 sm:col-span-1 sm:mt-0">
                             <label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pb-2 ">End Dates</label>
-                              <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                              <datepicker  v-model="form.end_date"></datepicker>
                             </div>
 
                           </div>
@@ -212,7 +228,7 @@ const Hide__Or__Show__MPA = () => {
                 </div>
                 <div class="pt-5">
                   <div class="flex justify-end">
-                    <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
+                    <button type="submit" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
                     <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
                   </div>
                 </div>

@@ -43,6 +43,18 @@
     Link,
   } from '@inertiajs/inertia-vue3';
   const swal = inject('$swal')
+  const Items_Checked = ref([])
+
+   onMounted(() => {
+    const ck__delete = document.querySelectorAll(".ck-delete")
+    
+    ck__delete.forEach((items) => {
+      const obj = {
+        checked:false
+      }
+      Items_Checked.value.push(obj)
+    });
+  })
 
    const people = [{
       name: 'Adidas | Adidas Golf',
@@ -93,6 +105,68 @@
     href: '#',
     current: false
   }, ])
+
+  const ckbox = ref(false);
+  const CountCkDelete = ref(0)
+
+  const SetCkBox = () => {
+      let countCk = 0
+      if(event.target.checked) {
+        document.querySelectorAll(".ck-delete").forEach((items) => {
+          countCk++
+        });
+        CountCkDelete.value = countCk
+        Items_Checked.value.map((items)=>{
+          if(!items.checked) {
+            items.checked = true
+          }
+        })
+      } else {
+        countCk = 0
+        Items_Checked.value.map((items)=>{
+          if(items.checked) {
+            items.checked = false
+          }
+        })
+      }
+      ckbox.value = event.target.checked 
+      CountCkDelete.value=countCk
+  }
+
+  const NewListDelete = (index) => {
+    let count__true = 0
+    Items_Checked.value[index].checked = event.target.checked;
+    Items_Checked.value.map((items)=>{
+      items.checked ? count__true++ : '' 
+    })
+    CountCkDelete.value=count__true
+    if(count__true == Items_Checked.value.length) {
+      ckbox.value = true
+    } else {
+      ckbox.value = false
+    }
+  }
+
+  const Remove_Product = () => {
+    swal.fire({
+      title: 'Are you sure?',
+      text: "Delete this data",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
   
 </script>
 <template lang="">
@@ -181,7 +255,7 @@
         </div>
 
         <div :class="[CountCkDelete ? '' : 'hidden' ,' flex flex-1 justify-start px-2 py-2']">
-          <div class="inline-flex w-auto justify-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+          <div class="inline-flex w-auto justify-center border border-gray-300 rounded-l bg-white px-2 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
             <div class="flex h-5 items-center">
               <input @change="SetCkBox" id="delete" aria-describedby="delete-description" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" :checked="ckbox" />
             </div>
@@ -189,7 +263,7 @@
               <label for="delete" class="font-medium text-gray-700">{{CountCkDelete}} selected</label>
             </div>
           </div>
-          <button @click="Remove_Product" type="button" class="inline-flex items-center rounded border border-transparent bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
+          <button @click="Remove_Product" type="button" class="inline-flex items-center rounded-r border border-transparent bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
         </div>
 
         <Tables>
@@ -216,7 +290,7 @@
               <td class="pl-4">
                 <div class="relative flex justify-start items-center">
                   <div class="flex h-5 items-center ">
-                    <input @change="NewListDelete(index)" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ck-delete" checked/>
+                    <input @change="NewListDelete(index)" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ck-delete" :checked="Items_Checked[index]?.checked"/>
                   </div>
                 </div>
               </td>
@@ -229,7 +303,7 @@
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Code</td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Amount of order</td>
               <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                <Link :href="route('edit-discount', index)" class="text-indigo-600 hover:text-indigo-900">Edit</Link>
               </td>
             </tr>
           </tbody>
