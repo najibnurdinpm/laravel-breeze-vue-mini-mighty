@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -62,8 +63,15 @@ Route::get('/edit-collection/{id}', [CollectionController::class, 'edit'])
         return Inertia::render('Collection/AddCollection');
     })->name('add-collection');
 
-    Route::get('/discount', function () {
-        return Inertia::render('Discount/Discount');
-    })->name('discount');
+    
+    // Route::get('/discount', function () {
+    //     return Inertia::render('Discount/Discount');
+    // })->name('discount');
+
+    Route::get('/discount', [DiscountController::class, 'index'])
+        ->name('discount');
+
+    Route::get('/add-discount', [DiscountController::class, 'create'])
+        ->name('add-discount');
 
 require __DIR__.'/auth.php';
