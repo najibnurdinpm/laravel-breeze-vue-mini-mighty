@@ -50,6 +50,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        return Inertia::render('Product/EditProduct');
         //
     }
 
@@ -61,6 +62,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        return Inertia::render('Product/EditProduct');
         //
     }
 
@@ -74,6 +76,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return Redirect::to('/product');
     }
 
     /**

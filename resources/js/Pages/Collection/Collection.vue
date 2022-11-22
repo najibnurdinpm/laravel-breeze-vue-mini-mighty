@@ -303,7 +303,7 @@
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">5</td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Testing description</td>
               <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                <Link :href="route('edit-collection', index)" class="text-indigo-600 hover:text-indigo-900">Edit</Link>
               </td>
             </tr>
           </tbody>

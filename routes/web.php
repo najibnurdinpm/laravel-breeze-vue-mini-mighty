@@ -43,11 +43,20 @@ Route::get('/add-product', function () {
 Route::post('/product', [ProductController::class, 'store'])
                 ->name('product');
 
+Route::get('/edit-product/{id}', [ProductController::class, 'edit'])
+    ->name('edit-product');
+
+    Route::post('/update-product/{id}', [ProductController::class, 'update'])
+    ->name('update-product');
+
 Route::get('/collection', [CollectionController::class, 'create'])
     ->name('collection');
 
 Route::post('/collection', [CollectionController::class, 'store'])
     ->name('collection');
+
+Route::get('/edit-collection/{id}', [CollectionController::class, 'edit'])
+    ->name('edit-collection');
 
     Route::get('/add-collection', function () {
         return Inertia::render('Collection/AddCollection');

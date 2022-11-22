@@ -59,6 +59,7 @@ class CollectionController extends Controller
     public function edit($id)
     {
         //
+        return Inertia::render('Collection/EditCollection');
     }
 
     /**
