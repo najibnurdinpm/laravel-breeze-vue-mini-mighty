@@ -88,7 +88,10 @@ const Hide__Or__Show__MPA = () => {
     <HeaderDasboard>
       <div class="flex items-center space-x-3">
         <Link :href="route('discount')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"> 
-          <component :is="ChevronLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" /> 
+         <div class="flex items-center space-x-3">
+              <component :is="ChevronLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" /> 
+               <p class=" h-5 w-auto text-white">Back</p> 
+          </div> 
         </Link>
         <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Create discount</h3>
       </div>
