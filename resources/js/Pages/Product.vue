@@ -41,6 +41,7 @@
   } from '@heroicons/vue/24/outline'
   import {
     Link,
+    Head,
   } from '@inertiajs/inertia-vue3';
 
   const swal = inject('$swal')
@@ -189,6 +190,7 @@
   }
 </script>
 <template lang="">
+  <Head title="Product" />
   <DashboardLayout>
     <HeaderDasboard>
       <HeaderTable>

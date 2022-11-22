@@ -41,6 +41,7 @@
   } from '@heroicons/vue/24/outline'
   import {
     Link,
+    Head,
   } from '@inertiajs/inertia-vue3';
   const swal = inject('$swal')
   const Items_Checked = ref([])
@@ -174,6 +175,7 @@
   }
 </script>
 <template lang="">
+<Head title="Collection" />
   <DashboardLayout>
     <HeaderDasboard>
       <HeaderTable>

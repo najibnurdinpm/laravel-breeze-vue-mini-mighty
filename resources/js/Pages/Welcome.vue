@@ -3,6 +3,10 @@
     ref,
     onMounted
   } from 'vue'
+   import {
+    Head,
+    Link,
+  } from '@inertiajs/inertia-vue3';
   import DashboardLayout from '@/Layouts/Dashboard/DashboardLayout.vue';
   import HeaderDasboard from '@/Layouts/Dashboard/HeaderDasboard.vue';
   import BodyDashboard from '@/Layouts/Dashboard/BodyDashboard.vue';
@@ -153,6 +157,7 @@
   ]
 </script>
 <template lang="">
+<Head title="Home" />
   <DashboardLayout>
     <HeaderDasboard>
       <h1 class="text-2xl font-semibold text-gray-900 mb-4 px-4 sm:px-0 lg:px-0">Dashboard</h1>
