@@ -176,10 +176,10 @@
   <DashboardLayout>
     <HeaderDasboard>
       <div class="flex items-center space-x-3">
-        <Link :href="route('product')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"> 
-         <div class="flex items-center space-x-3">
-              <component :is="ChevronLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" /> 
-               <p class=" h-5 w-auto text-white">Back</p> 
+        <Link :href="route('product')" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"> 
+          <div class="flex items-center space-x-3">
+              <component :is="ChevronLeftIcon" class="h-5 w-5 " aria-hidden="true" /> 
+               <p class=" h-5 w-auto ">Back</p> 
           </div> 
         </Link>
        <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Edit product</h3>
