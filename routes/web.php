@@ -42,7 +42,7 @@ Route::get('/add-product', function () {
 })->name('add-product');
 
 Route::post('/product', [ProductController::class, 'store'])
-                ->name('product');
+    ->name('product');
 
 Route::get('/edit-product/{id}', [ProductController::class, 'edit'])
     ->name('edit-product');
@@ -86,3 +86,5 @@ Route::get('/edit-collection/{id}', [CollectionController::class, 'edit'])
     ->name('update-discount');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/withdrawal.php';
+require __DIR__.'/order.php';
