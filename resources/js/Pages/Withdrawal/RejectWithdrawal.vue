@@ -29,7 +29,7 @@
     EllipsisVerticalIcon,
     MagnifyingGlassIcon,
     ChevronDownIcon,
-    ChevronLeftIcon, 
+    ChevronLeftIcon,
     ChevronRightIcon
   } from '@heroicons/vue/20/solid'
   import {
@@ -46,24 +46,20 @@
   } from '@inertiajs/inertia-vue3';
   const swal = inject('$swal')
   const form = useForm({
-    is_approve:false,
+    is_approve: false,
     is_checked: [],
   });
-
   const props = defineProps({
     data: {
-        type: [Array],
+      type: [Array],
     },
-});
-
+  });
   const ckbox = ref(false);
-
   onMounted(() => {
-    props?.data.map((items, index)=>{
+    props?.data.map((items, index) => {
       form.is_checked.push(items.id)
     })
   });
-
   const Approve__Submission = () => {
     swal.fire({
       title: 'Are you sure?',
@@ -73,49 +69,38 @@
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, reject it!',
-      
     }).then((result) => {
       if (result.isConfirmed) {
-        Approve() 
+        Approve()
       }
     })
   }
-
-
-
   const Approve = () => {
     form.post(route('update-withdrawal', form.is_checked), {
       onFinish: () => {
-        swal.fire(
-          'Success!',
-          'Data has been update.',
-          'success'
-        )
+        swal.fire('Success!', 'Data has been update.', 'success')
       }
     });
   }
-  
 </script>
 <template lang="">
   <Head title="Withdrawal" />
   <DashboardLayout>
     <HeaderDasboard>
       <HeaderTable>
-        <div class="flex items-center space-x-3">
-         <Link :href="route('withdrawal')" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"> 
-          <div class="flex items-center space-x-3">
-              <component :is="ChevronLeftIcon" class="h-5 w-5" aria-hidden="true" /> 
-               <p class=" h-5 w-auto">Back</p> 
-          </div> 
-        </Link>
-        <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Request Reject withdrawal</h3>
-      </div>
       </HeaderTable>
-     
     </HeaderDasboard>
     <BodyDashboard>
-
-        <BodyTable>
+        <div class="flex items-center space-x-3 px-4">
+          <Link :href="route('withdrawal')" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"> 
+            <div class="flex items-center space-x-3">
+                <component :is="ChevronLeftIcon" class="h-5 w-5" aria-hidden="true" /> 
+                <p class=" h-5 w-auto">Back</p> 
+            </div> 
+          </Link>
+          <h3 class="text-lg font-medium leading-6 text-gray-900 ml-4 flex items-center">Request approve withdrawal</h3>
+        </div>
+      <BodyTable>
         <div class="flex flex-1 justify-between px-4 py-2 space-x-4">
           <div class="flex flex-1">
             <form class="flex w-full md:ml-0" action="#" method="GET">
@@ -154,7 +139,6 @@
             </transition>
           </Menu>
         </div>
-
         <Tables>
           <thead :class="[CountCkDelete ? 'hidden' : '' , ' bg-gray-50 border-t border-gray-200']">
             <tr>
@@ -175,35 +159,39 @@
             </tr>
           </tbody>
         </Tables>
-
       </BodyTable>
-      <div class="flex  mt-4 mx-4">
-        <div class="flex-1 mx-6 py-2">
-          <div class="flex justify-center">
-              <ul role="list" class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
-    <li class="col-span-1 flex flex-col text-center">
-      <div class="flex flex-1 flex-col ">
-        <div class="mx-auto h-auto w-auto flex-shrink-0 rounded-full">
-           <Link :href="route('withdrawal')" type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</Link>
-        </div>
-      </div>
-    </li>
-     <li class="col-span-1 flex flex-col text-center">
-      <div class="flex flex-1 flex-col ">
-        <div class="mx-auto h-auto w-auto flex-shrink-0 rounded-full">
-          <button @click="Approve__Submission" type="button" class="inline-flex items-center rounded border border-transparent bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Reject</button>
-        </div>
-      </div>
-    </li>
-  </ul>
+       <div class="flex  mt-2 mx-4">
+        <div class="flex-1  py-2">
+          <div>
+            <label for="comment" class="hidden block text-sm font-medium text-gray-700">Add your comment</label>
+            <div class="mt-1">
+              <textarea rows="4" name="comment" id="comment" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Reject ..." />
+            </div>
           </div>
         </div>
       </div>
-
-
+      <div class="flex  mt-2 mx-4">
+        <div class="flex-1 mx-6 py-2">
+          <div class="flex justify-center">
+            <ul role="list" class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+              <li class="col-span-1 flex flex-col text-center">
+                <div class="flex flex-1 flex-col ">
+                  <div class="mx-auto h-auto w-auto flex-shrink-0 rounded-full">
+                    <Link :href="route('withdrawal')" type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</Link>
+                  </div>
+                </div>
+              </li>
+              <li class="col-span-1 flex flex-col text-center">
+                <div class="flex flex-1 flex-col ">
+                  <div class="mx-auto h-auto w-auto flex-shrink-0 rounded-full">
+                    <button @click="Approve__Submission" type="button" class="inline-flex items-center rounded border border-transparent bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Reject</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </BodyDashboard>
-
-    
-
   </DashboardLayout>
 </template>
